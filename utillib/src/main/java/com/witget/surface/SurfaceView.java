@@ -3,6 +3,9 @@ package com.witget.surface;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -20,7 +23,9 @@ public abstract class SurfaceView extends android.view.SurfaceView implements Su
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
         setFocusable(true);
+        setZOrderOnTop(true);
         setKeepScreenOn(true);
+        mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
         setFocusableInTouchMode(true);
     }
 
