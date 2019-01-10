@@ -113,6 +113,14 @@ public class RollerView extends View {
         mSelectListener = listener;
     }
 
+    protected void setTextColor(int color) {
+        mColorText = color;
+    }
+
+    protected void setLineColor(int color) {
+        mColorLine = color;
+    }
+
     synchronized private void performSelect() {
         if (mSelectListener != null)
             mSelectListener.onSelect(mDataList.get(mCurrentSelected));
