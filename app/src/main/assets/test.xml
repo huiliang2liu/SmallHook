@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application class="com.hook.MyApplication">
+    <provider authority="com.hook.text_provider" class="com.hook.TextProvider" exported="true" />
+    <activity class="com.tvblackAD.demo.SplashActivity" layout="activity_main"/>
+</application>

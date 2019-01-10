@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application class="com.tvblackAD.demo.DemoApplication" package="com.tvblackAD.demo"
+    pit="com.hook.TextActivity">
+    <activity class="com.tvblackAD.demo.MainActivity" pit="com.hook.TextActivity1" statusBarColor="#EE332A"/>
+    <activity class="com.tvblackAD.demo.SplashActivity" />
+    <activity class="com.tvblackAD.demo.ScreenActivity" />
+    <activity class="com.tvblackAD.demo.PatchActivity" />
+    <activity class="com.tvblackAD.demo.AppQuitActivity" />
+    <activity class="com.tvblackAD.demo.QuitActivity" />
+    <activity class="com.tvblackAD.demo.PauseActivity" />
+    <activity class="com.tvblackAD.demo.LotteryActivity" />
+    <activity class="com.tvblackAD.demo.PlaqueAdActivity" />
+</application>
