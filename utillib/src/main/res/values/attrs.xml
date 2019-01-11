@@ -33,4 +33,12 @@
         <attr name="radiusDifference" format="integer" />
         <attr name="waitViewRefresh" format="boolean" />
     </declare-styleable>
+    <declare-styleable name="SelectDateView">
+        <attr name="selectYear" format="integer" />
+        <attr name="selectMonth" format="integer" />
+        <attr name="selectDay" format="integer" />
+        <attr name="dateYears" format="reference" />
+        <attr name="dateLineColor" format="color" />
+        <attr name="dateTextColor" format="color" />
+    </declare-styleable>
 </resources>

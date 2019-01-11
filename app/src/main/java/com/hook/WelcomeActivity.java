@@ -2,7 +2,6 @@ package com.hook;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +14,6 @@ import com.reflect.ClassManager;
 import com.reflect.FieldManager;
 import com.result.Result;
 import com.sava.AndroidFileUtil;
-import com.thread.Handler;
 import com.thread.PoolManager;
 import com.utils.ApkUtil;
 import com.utils.ContentManager;
@@ -23,8 +21,8 @@ import com.utils.LogUtil;
 import com.utils.StreamUtil;
 import com.view.FloatView;
 import com.view.LayoutInflater;
-import com.witget.CountdownView;
 import com.witget.FullScreenView;
+import com.witget.SelectDateView;
 import com.xml.ProvinceManager;
 
 import java.io.File;
@@ -44,8 +42,8 @@ public class WelcomeActivity extends Activity implements NetCallback, RemoveList
     private View view1;
     private View view2;
     private Result result;
-    private CountdownView countdownView;
-    private int pro = 0;
+//    private FanProgress countdownView;
+//    private int pro = 0;
 
 
     @Override
@@ -59,18 +57,25 @@ public class WelcomeActivity extends Activity implements NetCallback, RemoveList
         view = findViewById(R.id.text);
         view1 = findViewById(R.id.text1);
         view2 = findViewById(R.id.text2);
-        countdownView = findViewById(R.id.progress);
-        Handler handler = new Handler() {
+        final SelectDateView selectDateView = findViewById(R.id.progress);
+        selectDateView.setDateChangeListener(new SelectDateView.DateChangeListener() {
             @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                countdownView.setProgress(pro);
-                pro++;
-                if (pro < 101)
-                    sendEmptyMessageDelayed(0, 1000);
+            public void dateChange() {
+                LogUtil.e(TAG, "year=" + selectDateView.year() + ",month=" + selectDateView.month() + ",day=" + selectDateView.day());
             }
-        };
-        handler.sendEmptyMessage(0);
+        });
+//        countdownView = findViewById(R.id.progress);
+//        Handler handler = new Handler() {
+//            @Override
+//            public void handleMessage(Message msg) {
+//                super.handleMessage(msg);
+//                countdownView.setProgress(pro);
+//                pro++;
+//                if (pro < 101)
+//                    sendEmptyMessageDelayed(0, 1000);
+//            }
+//        };
+//        handler.sendEmptyMessage(0);
         mFullScreenView = new FullScreenView(new FloatView(this));
         view.setOnClickListener(new View.OnClickListener() {
             @Override

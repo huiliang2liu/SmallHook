@@ -47,8 +47,15 @@
         android:scaleType="fitXY"
         android:src="@mipmap/timg" />
 
-    <com.witget.CountdownView
+    <com.witget.SelectDateView
         android:id="@+id/progress"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:background="@android:color/white"
+        text:dateLineColor="@android:color/holo_orange_light"
+        text:dateTextColor="@android:color/holo_red_light"
+        text:selectDay="19"
+        text:selectMonth="10"
+        text:selectYear="2017"
+        text:dateYears="@array/years"
+        android:layout_height="200dp" />
 </FrameLayout>
