@@ -3,7 +3,6 @@ package com.hook;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,15 +13,13 @@ import com.reflect.ClassManager;
 import com.reflect.FieldManager;
 import com.result.Result;
 import com.sava.AndroidFileUtil;
+import com.svg.vector.VectorPars;
 import com.thread.PoolManager;
 import com.utils.ApkUtil;
 import com.utils.ContentManager;
 import com.utils.LogUtil;
 import com.utils.StreamUtil;
-import com.view.FloatView;
 import com.view.LayoutInflater;
-import com.witget.FullScreenView;
-import com.witget.SelectDateView;
 import com.xml.ProvinceManager;
 
 import java.io.File;
@@ -37,14 +34,8 @@ import java.io.IOException;
  **/
 public class WelcomeActivity extends Activity implements NetCallback, RemoveListener {
     private final static String TAG = "WelcomeActivity";
-    private FullScreenView mFullScreenView;
-    private ImageView view;
-    private View view1;
-    private View view2;
     private Result result;
-//    private FanProgress countdownView;
-//    private int pro = 0;
-
+    private ImageView imageView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,14 +45,16 @@ public class WelcomeActivity extends Activity implements NetCallback, RemoveList
 //        startService(new Intent(this, ServiceA.class));
         TextView tv = findViewById(R.id.signer);
         tv.setText("sha1:" + ApkUtil.sHA1(this) + "\nhash:" + ApkUtil.getHash(this));
-        view = findViewById(R.id.text);
-        view1 = findViewById(R.id.text1);
-        view2 = findViewById(R.id.text2);
-        final SelectDateView selectDateView = findViewById(R.id.progress);
-        selectDateView.setDateChangeListener(new SelectDateView.DateChangeListener() {
+        imageView = findViewById(R.id.image_view);
+        imageView.post(new Runnable() {
             @Override
-            public void dateChange() {
-                LogUtil.e(TAG, "year=" + selectDateView.year() + ",month=" + selectDateView.month() + ",day=" + selectDateView.day());
+            public void run() {
+                VectorPars svgPars = VectorPars.init();
+                try {
+                    imageView.setImageDrawable(svgPars.parasString("M63,0.1A22.6,22.4 0,0 0,42.1 14.2,17.3 17.3,0 0,0 30.9,10.2 17.3,17.3 0,0 0,13.7 25.8,8.8 8.8,0 0,0 8.7,24.2 8.8,8.8 0,0 0,0 32h99a7.9,7.9 0,0 0,0 -0.6,7.9 7.9,0 0,0 -7.9,-7.9 7.9,7.9 0,0 0,-5.8 2.6,22.6 22.4,0 0,0 0.3,-3.6A22.6,22.4 0,0 0,63 0.1Z").createDrawable(imageView));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 //        countdownView = findViewById(R.id.progress);
@@ -76,25 +69,6 @@ public class WelcomeActivity extends Activity implements NetCallback, RemoveList
 //            }
 //        };
 //        handler.sendEmptyMessage(0);
-        mFullScreenView = new FullScreenView(new FloatView(this));
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFullScreenView.enter(view);
-            }
-        });
-        view1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFullScreenView.enter(view1);
-            }
-        });
-        view2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFullScreenView.enter(view2);
-            }
-        });
         ContentManager.getManager().registerRemoveListener(this);
         final ImageLoad imageLoad = new ImageLoad.Build().context(this).buidle();
         LogUtil.e(TAG, imageLoad.getClass().getName());
@@ -123,7 +97,6 @@ public class WelcomeActivity extends Activity implements NetCallback, RemoveList
 
             }
         });
-        imageLoad.load(view, "https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1541041501&di=d045ddcde5e5732ddd43dc86c5b63ce5&src=http://img17.3lian.com/d/file/201703/07/fc03b55448ee1e068c7132007c80abc2.jpg");
     }
 
     @Override
