@@ -16,6 +16,9 @@ import com.app.ReplacListener;
 import com.app.RestartListener;
 import com.hook.Hook;
 import com.hook.ParasXml;
+import com.http.FileHttp;
+import com.http.Http;
+import com.http.down.DownFile;
 import com.load.ApkResources;
 import com.load.Load;
 import com.net.NetCallback;
@@ -40,6 +43,9 @@ public class ContentManager {
     private Load mLoad;
     private NetState mNetState;
     private ApkState mApkState;
+    private Http mHttp;
+    private FileHttp mFileHttp;
+    private DownFile mDownFile;
 
     /**
      * 2018/4/13 18:57 annotation：获取application对象 author：liuhuiliang email
@@ -57,8 +63,23 @@ public class ContentManager {
         return mActivity;
     }
 
+    public Http getHttp() {
+        return mHttp;
+    }
+
+    public FileHttp getFileHttp() {
+        return mFileHttp;
+    }
+
+    public DownFile getDownFile() {
+        return mDownFile;
+    }
+
     private ContentManager() {
         mApplication = field2Application();
+        mHttp = new Http.Build().context(mApplication).build();
+        mFileHttp = new FileHttp.Build().build();
+        mDownFile = new DownFile.Build().context(mApplication).build();
         mHook = new Hook(mApplication);
         mLoad = new Load();
         mNetState = NetState.getNetState(mApplication);
@@ -185,9 +206,11 @@ public class ContentManager {
     public void setBase(Context context) {
         mHook.setBase(context);
     }
-   public ParasXml.ActivityXml className2ActivityXml(String className){
+
+    public ParasXml.ActivityXml className2ActivityXml(String className) {
         return mHook.pit(className);
-   }
+    }
+
     public Intent name2intent(String packageName, String classNam) {
         ComponentName componentName = new ComponentName(packageName, classNam);
         Intent intent = new Intent();
