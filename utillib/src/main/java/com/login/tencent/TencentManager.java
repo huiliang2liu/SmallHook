@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
-import com.login.LoginListener;
+import com.login.Listener;
 import com.login.iface.ILogin;
 import com.tencent.tauth.Tencent;
 import com.utils.LogUtil;
@@ -42,7 +42,7 @@ public class TencentManager {
         mTencent = Tencent.createInstance(mAppId, mContext);
     }
 
-    public void login(FragmentActivity activity, LoginListener loginListener) {
+    public void login(FragmentActivity activity, Listener loginListener) {
         if (mTencent.isSessionValid()) {
             LogUtil.e(TAG, "is session valid");
             return;
@@ -54,7 +54,7 @@ public class TencentManager {
         mLogin.login(loginListener);
     }
 
-    public void login(Fragment fragment, LoginListener loginListener) {
+    public void login(Fragment fragment, Listener loginListener) {
         if (mTencent.isSessionValid()) {
             LogUtil.e(TAG, "is session valid");
             return;

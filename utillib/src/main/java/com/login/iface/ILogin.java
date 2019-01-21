@@ -1,6 +1,6 @@
 package com.login.iface;
 
-import com.login.LoginListener;
+import com.login.Listener;
 
 /**
  * com.login.iface
@@ -9,5 +9,5 @@ import com.login.LoginListener;
  * author:liuhuiliang  email:825378291@qq.com
  **/
 public interface ILogin {
-    public void login(LoginListener loginListener);
+    public void login(Listener loginListener);
 }

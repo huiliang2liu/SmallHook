@@ -4,6 +4,8 @@ import com.http.http.HttpManage;
 import com.http.http.request.FlowRequest;
 import com.http.http.response.Response;
 import com.keep.alive.KeepAliveManager;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.utils.ContentManager;
 import com.utils.LogUtil;
 import com.utils.StreamUtil;
@@ -20,6 +22,7 @@ import java.util.Set;
  **/
 public class MyApplication extends com.hook.Application implements ScreenStateListener {
     private Set<FloatWindow> windows;
+    public static IWXAPI mWxApi;
 
     @Override
     public void onCreate() {
@@ -27,6 +30,10 @@ public class MyApplication extends com.hook.Application implements ScreenStateLi
         ContentManager.getManager().setHookActivity("com.hook.TextActivity");
         registerScreenStateListener(this);
         KeepAliveManager.start(this, 10000, AliveService.class.getName());
+        //第二个参数是指你应用在微信开放平台上的AppID
+        mWxApi = WXAPIFactory.createWXAPI(this, "", false);
+        // 将该app注册到微信
+        mWxApi.registerApp("");
     }
 
 

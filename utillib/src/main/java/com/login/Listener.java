@@ -6,7 +6,7 @@ package com.login;
  * instructions：
  * author:liuhuiliang  email:825378291@qq.com
  **/
-public interface LoginListener {
+public interface Listener {
     //登录回调
 
     /**

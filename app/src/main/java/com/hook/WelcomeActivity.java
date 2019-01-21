@@ -1,6 +1,7 @@
 package com.hook;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
@@ -14,6 +15,8 @@ import com.reflect.FieldManager;
 import com.result.Result;
 import com.sava.AndroidFileUtil;
 import com.svg.vector.VectorPars;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.thread.PoolManager;
 import com.utils.ApkUtil;
 import com.utils.ContentManager;
@@ -45,6 +48,7 @@ public class WelcomeActivity extends Activity implements NetCallback, RemoveList
 //        startService(new Intent(this, ServiceA.class));
         TextView tv = findViewById(R.id.signer);
         tv.setText("sha1:" + ApkUtil.sHA1(this) + "\nhash:" + ApkUtil.getHash(this));
+        LogUtil.e(TAG,ApkUtil.sHA1(this));
         imageView = findViewById(R.id.image_view);
         imageView.post(new Runnable() {
             @Override
@@ -97,8 +101,31 @@ public class WelcomeActivity extends Activity implements NetCallback, RemoveList
 
             }
         });
+        //先判断是否安装微信APP,按照微信的说法，目前移动应用上微信登录只提供原生的登录方式，需要用户安装微信客户端才能配合使用。
+        if (!isWXAppInstalledAndSupported(this,((MyApplication)getApplication()).mWxApi)) {
+            return;
+        }
+        LogUtil.e(TAG,"已经安装了微信");
+        wxLogin();
     }
+    // 提示檢測微信端
+    private static boolean isWXAppInstalledAndSupported(Context context,
+                                                        IWXAPI api) {
+        boolean sIsWXAppInstalledAndSupported = api.isWXAppInstalled();
+        if (!sIsWXAppInstalledAndSupported) {
+            LogUtil.e(TAG,"您还未安装微信客户端");
+        }
 
+        return sIsWXAppInstalledAndSupported;
+    }
+    //微信登录
+    public void wxLogin() {
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        //像微信发送请求
+        MyApplication.mWxApi.sendReq(req);
+    }
     @Override
     public void onAvailable() {
         LogUtil.w(TAG, "网络连接");

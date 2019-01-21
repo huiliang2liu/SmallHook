@@ -2,7 +2,7 @@ package com.login.weixin;
 
 import android.content.Context;
 
-import com.login.LoginListener;
+import com.login.Listener;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -23,7 +23,7 @@ public class WeiXinManager  {
     private Context mContext;
     private String mAppId;
     private String mAppSecret;
-    protected LoginListener mLoginListener;
+    protected Listener mLoginListener;
 
     public static WeiXinManager init(Context context, String appId, String appSecret) {
         if (mWeiXinManager == null)
@@ -54,7 +54,7 @@ public class WeiXinManager  {
      * author：liuhuiliang
      * email ：825378291@qq.com
      */
-    public void login(LoginListener loginListener) {
+    public void login(Listener loginListener) {
         LogUtil.e(TAG, "发起登录请求");
         mLoginListener=loginListener;
         final SendAuth.Req req = new SendAuth.Req();
