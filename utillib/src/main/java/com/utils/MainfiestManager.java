@@ -3,6 +3,7 @@ package com.utils;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
@@ -19,6 +20,7 @@ public class MainfiestManager {
 	private static MainfiestManager mMainfiestManager;
 	private PackageManager packageManager;
 	private String packageName;
+	private String name;
 
 	public static enum Type {
 		SERVICE, RECEIVER, ACTIVITY, APPLICATION
@@ -37,6 +39,12 @@ public class MainfiestManager {
 	private MainfiestManager(Context context) {
 		packageManager = context.getPackageManager();
 		packageName=context.getPackageName();
+		try {
+			PackageInfo packageInfo=packageManager.getPackageInfo(packageName,0);
+			packageInfo.applicationInfo.loadLabel(packageManager);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

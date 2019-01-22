@@ -1,5 +1,7 @@
 package com.http.okhttp;
 
+import android.os.Environment;
+
 import com.http.AbsHttp;
 import com.http.FileHttp;
 import com.http.ResponseObject;
@@ -17,7 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -37,8 +41,26 @@ import okhttp3.Response;
  **/
 public class OkHttp extends AbsHttp implements FileHttp {
     private final static String TAG = "OkHttp";
-    private OkHttpClient okHttp = new OkHttpClient();
+    private static final long cacheSize = 1024 * 1024 * 20;// 缓存文件最大限制大小20M
+    private String cacheDirectory = Environment.getExternalStorageDirectory() + "/okttpcaches"; // 设置缓存文件路径
+    private Cache cache = new Cache(new File(cacheDirectory), cacheSize);  //
+    private OkHttpClient okHttp;
     private Map<Object, List<Call>> callMap = new HashMap<>();
+
+     {
+        //如果无法生存缓存文件目录，检测权限使用已经加上，检测手机是否把文件读写权限禁止了
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(8, TimeUnit.SECONDS); // 设置连接超时时间
+        builder.writeTimeout(8, TimeUnit.SECONDS);// 设置写入超时时间
+        builder.readTimeout(8, TimeUnit.SECONDS);// 设置读取数据超时时间
+//         retryAndFollowUpInterceptor
+//         RetryIntercepter
+        builder.retryOnConnectionFailure(true);// 设置进行连接失败重试
+        builder.cache(cache);// 设置缓存
+         okHttp = builder.build();
+
+    }
+
 
     @Override
     public ResponseString get(RequestEntity entity) {
@@ -159,9 +181,9 @@ public class OkHttp extends AbsHttp implements FileHttp {
         List<Call> calls = callMap.get(tag);
         if (calls == null || calls.size() <= 0)
             return;
-        for (Call call : calls){
-                LogUtil.i(TAG,"取消请求");
-                call.cancel();
+        for (Call call : calls) {
+            LogUtil.i(TAG, "取消请求");
+            call.cancel();
         }
 
         callMap.remove(tag);

@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentActivity;
 
 import com.login.Listener;
 import com.login.iface.ILogin;
-import com.tencent.tauth.Tencent;
 import com.utils.LogUtil;
 
 /**
@@ -17,7 +16,7 @@ import com.utils.LogUtil;
  **/
 public class TencentManager {
     private static final String TAG = "TencentManager";
-    protected Tencent mTencent;
+    protected com.tencent.tauth.Tencent mTencent;
     private static TencentManager mManager;
     private String mAppId;
     private Context mContext;
@@ -39,7 +38,7 @@ public class TencentManager {
     private TencentManager(Context context, String appId) {
         mContext = context.getApplicationContext();
         mAppId = appId;
-        mTencent = Tencent.createInstance(mAppId, mContext);
+        mTencent = com.tencent.tauth.Tencent.createInstance(mAppId, mContext);
     }
 
     public void login(FragmentActivity activity, Listener loginListener) {
@@ -70,7 +69,7 @@ public class TencentManager {
         android.support.v4.app.Fragment fragment = manager.findFragmentByTag(TAG);
         boolean isNewInstance = fragment == null;
         if (isNewInstance) {
-            fragment = new V4Fragment();
+            fragment = new TencentImpl();
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(fragment, TAG);
             if (android.os.Build.VERSION.SDK_INT >= 24)
