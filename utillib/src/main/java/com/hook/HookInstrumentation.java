@@ -217,6 +217,9 @@ class HookInstrumentation implements InvocationHandler {
                 ViewGroup decorView = (ViewGroup) activity.getWindow()
                         .getDecorView();
                 decorView.addView(statusView);
+                ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+                rootView.setFitsSystemWindows(true);
+                rootView.setClipToPadding(true);
             }
         }
 //        status bar

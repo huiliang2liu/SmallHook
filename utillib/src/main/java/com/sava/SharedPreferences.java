@@ -60,7 +60,7 @@ public class SharedPreferences implements android.content.SharedPreferences, and
     }
 
     public SharedPreferences(String file) {
-        this(new File(file), Context.MODE_APPEND);
+        this(new File(file), Context.MODE_PRIVATE);
     }
 
     public SharedPreferences(Context context, String file, int mode) {
@@ -70,7 +70,7 @@ public class SharedPreferences implements android.content.SharedPreferences, and
     }
 
     public SharedPreferences(Context context, String file) {
-        this(context, file, Context.MODE_APPEND);
+        this(context, file, Context.MODE_PRIVATE);
     }
 
     public SharedPreferences(File file, int mode) {
@@ -96,7 +96,7 @@ public class SharedPreferences implements android.content.SharedPreferences, and
     }
 
     public SharedPreferences(File file) {
-        this(file, Context.MODE_APPEND);
+        this(file, Context.MODE_PRIVATE);
     }
 
     @Override
