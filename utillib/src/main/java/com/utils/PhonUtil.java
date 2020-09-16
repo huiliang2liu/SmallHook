@@ -66,8 +66,7 @@ public class PhonUtil {
     public static void init(Activity activity) {
         if (activity == null)
             return;
-        WebView webView = new WebView(activity);
-        ua = webView.getSettings().getUserAgentString();
+        ua = ua(activity);
         androidId = Settings.Secure.getString(
                 activity.getContentResolver(), Settings.Secure.ANDROID_ID);
         DisplayMetrics displayMetrics = activity.getResources()
@@ -80,6 +79,15 @@ public class PhonUtil {
         toch = hasTouchScreen(activity);
         phon(activity);
         init = true;
+    }
+
+    public static String ua(Context context){
+        try {
+            WebView webView = new WebView(context);
+            return webView.getSettings().getUserAgentString();
+        } catch (Exception e) {
+            return System.getProperty("http.agent");
+        }
     }
 
     private static void phon(Activity activity) {

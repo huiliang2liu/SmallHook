@@ -64,7 +64,7 @@ class ObjectCallback implements Callback {
         if (okHttp != null)
             okHttp.remove(tag, call);
         ro = new ResponseObject();
-        response2object(response, ro);
+        response2object(response);
         PoolManager.runUiThread(new Runnable() {
             @Override
             public void run() {
@@ -88,7 +88,7 @@ class ObjectCallback implements Callback {
         return ro;
     }
 
-    private void response2object(Response response, ResponseObject rs) {
+    private void response2object(Response response) {
         if (!response.isSuccessful())
             return;
         ro.code = response.code();

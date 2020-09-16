@@ -46,14 +46,22 @@ public class KeepAliveManager {
         if (Build.VERSION.SDK_INT >= 21) {
             JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
             JobInfo.Builder builder = new JobInfo.Builder(context.getPackageName().hashCode(), new ComponentName(context.getPackageName(), KeepAliveJobService.class.getName()));
-            builder.setPeriodic(period);
+//            builder.setPeriodic(1000);
             if (Build.VERSION.SDK_INT >= 23) {
-                if (context.checkSelfPermission(Manifest.permission.RECEIVE_BOOT_COMPLETED) == PackageManager.PERMISSION_GRANTED)
+                if (context.checkSelfPermission(Manifest.permission.RECEIVE_BOOT_COMPLETED) == PackageManager.PERMISSION_GRANTED){
                     builder.setPersisted(true);
+                    LogUtil.e("有权限");
+                }
+
+                else
+                    LogUtil.e("没有权限");
             } else
                 builder.setPersisted(true);
+            builder.setMinimumLatency(5000);
+            builder.setOverrideDeadline(7000);
             builder.setRequiresDeviceIdle(true);
-            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+            builder.setRequiresCharging(true);
+//            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
             jobScheduler.schedule(builder.build());
         } else {
             Intent intent = new Intent(context, ServiceA.class);

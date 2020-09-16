@@ -12,11 +12,18 @@ import android.graphics.Path;
 public class PathUtil {
     public static Path factorPath(Path path, float factor) {
         Matrix matrix = new Matrix();
-        matrix.setValues(new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 1.0f });
+        matrix.setValues(new float[]{1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 1.0f});
         matrix.postScale(factor, factor);
         Path path1 = new Path();
-        path1.addPath(path, matrix);
+        if (path != null)
+            path1.addPath(path, matrix);
         return path1;
+    }
+
+    public static float string2float(String f) {
+        if (f.endsWith("px"))
+            return Float.valueOf(f.substring(0, f.length() - 2));
+        return Float.valueOf(f);
     }
 }

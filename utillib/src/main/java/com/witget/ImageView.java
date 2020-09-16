@@ -49,4 +49,9 @@ public class ImageView extends android.widget.ImageView {
             }
         }
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 }

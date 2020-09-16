@@ -97,7 +97,7 @@ public interface FileHttp {
 
     class Build {
         public FileHttp build() {
-            return (FileHttp) Proxy.newProxyInstance(FileHttp.class.getClassLoader(), new Class[]{Http.class}, new InvocationHandler() {
+            return (FileHttp) Proxy.newProxyInstance(FileHttp.class.getClassLoader(), new Class[]{FileHttp.class}, new InvocationHandler() {
                 FileHttp http = new FileHttpImpl();
 
                 @Override

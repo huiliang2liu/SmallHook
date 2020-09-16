@@ -6,6 +6,8 @@ import android.graphics.Path;
 import android.util.SparseArray;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,9 +41,163 @@ public class StringUtil {
         return string == null || string.isEmpty();
     }
 
+    private static final Map<String, Integer> colourKeywords = new HashMap<String, Integer>(47);
+
+    static {
+        colourKeywords.put("aliceblue", 0xf0f8ff);
+        colourKeywords.put("antiquewhite", 0xfaebd7);
+        colourKeywords.put("aqua", 0x00ffff);
+        colourKeywords.put("aquamarine", 0x7fffd4);
+        colourKeywords.put("azure", 0xf0ffff);
+        colourKeywords.put("beige", 0xf5f5dc);
+        colourKeywords.put("bisque", 0xffe4c4);
+        colourKeywords.put("black", 0x000000);
+        colourKeywords.put("blanchedalmond", 0xffebcd);
+        colourKeywords.put("blue", 0x0000ff);
+        colourKeywords.put("blueviolet", 0x8a2be2);
+        colourKeywords.put("brown", 0xa52a2a);
+        colourKeywords.put("burlywood", 0xdeb887);
+        colourKeywords.put("cadetblue", 0x5f9ea0);
+        colourKeywords.put("chartreuse", 0x7fff00);
+        colourKeywords.put("chocolate", 0xd2691e);
+        colourKeywords.put("coral", 0xff7f50);
+        colourKeywords.put("cornflowerblue", 0x6495ed);
+        colourKeywords.put("cornsilk", 0xfff8dc);
+        colourKeywords.put("crimson", 0xdc143c);
+        colourKeywords.put("cyan", 0x00ffff);
+        colourKeywords.put("darkblue", 0x00008b);
+        colourKeywords.put("darkcyan", 0x008b8b);
+        colourKeywords.put("darkgoldenrod", 0xb8860b);
+        colourKeywords.put("darkgray", 0xa9a9a9);
+        colourKeywords.put("darkgreen", 0x006400);
+        colourKeywords.put("darkgrey", 0xa9a9a9);
+        colourKeywords.put("darkkhaki", 0xbdb76b);
+        colourKeywords.put("darkmagenta", 0x8b008b);
+        colourKeywords.put("darkolivegreen", 0x556b2f);
+        colourKeywords.put("darkorange", 0xff8c00);
+        colourKeywords.put("darkorchid", 0x9932cc);
+        colourKeywords.put("darkred", 0x8b0000);
+        colourKeywords.put("darksalmon", 0xe9967a);
+        colourKeywords.put("darkseagreen", 0x8fbc8f);
+        colourKeywords.put("darkslateblue", 0x483d8b);
+        colourKeywords.put("darkslategray", 0x2f4f4f);
+        colourKeywords.put("darkslategrey", 0x2f4f4f);
+        colourKeywords.put("darkturquoise", 0x00ced1);
+        colourKeywords.put("darkviolet", 0x9400d3);
+        colourKeywords.put("deeppink", 0xff1493);
+        colourKeywords.put("deepskyblue", 0x00bfff);
+        colourKeywords.put("dimgray", 0x696969);
+        colourKeywords.put("dimgrey", 0x696969);
+        colourKeywords.put("dodgerblue", 0x1e90ff);
+        colourKeywords.put("firebrick", 0xb22222);
+        colourKeywords.put("floralwhite", 0xfffaf0);
+        colourKeywords.put("forestgreen", 0x228b22);
+        colourKeywords.put("fuchsia", 0xff00ff);
+        colourKeywords.put("gainsboro", 0xdcdcdc);
+        colourKeywords.put("ghostwhite", 0xf8f8ff);
+        colourKeywords.put("gold", 0xffd700);
+        colourKeywords.put("goldenrod", 0xdaa520);
+        colourKeywords.put("gray", 0x808080);
+        colourKeywords.put("green", 0x008000);
+        colourKeywords.put("greenyellow", 0xadff2f);
+        colourKeywords.put("grey", 0x808080);
+        colourKeywords.put("honeydew", 0xf0fff0);
+        colourKeywords.put("hotpink", 0xff69b4);
+        colourKeywords.put("indianred", 0xcd5c5c);
+        colourKeywords.put("indigo", 0x4b0082);
+        colourKeywords.put("ivory", 0xfffff0);
+        colourKeywords.put("khaki", 0xf0e68c);
+        colourKeywords.put("lavender", 0xe6e6fa);
+        colourKeywords.put("lavenderblush", 0xfff0f5);
+        colourKeywords.put("lawngreen", 0x7cfc00);
+        colourKeywords.put("lemonchiffon", 0xfffacd);
+        colourKeywords.put("lightblue", 0xadd8e6);
+        colourKeywords.put("lightcoral", 0xf08080);
+        colourKeywords.put("lightcyan", 0xe0ffff);
+        colourKeywords.put("lightgoldenrodyellow", 0xfafad2);
+        colourKeywords.put("lightgray", 0xd3d3d3);
+        colourKeywords.put("lightgreen", 0x90ee90);
+        colourKeywords.put("lightgrey", 0xd3d3d3);
+        colourKeywords.put("lightpink", 0xffb6c1);
+        colourKeywords.put("lightsalmon", 0xffa07a);
+        colourKeywords.put("lightseagreen", 0x20b2aa);
+        colourKeywords.put("lightskyblue", 0x87cefa);
+        colourKeywords.put("lightslategray", 0x778899);
+        colourKeywords.put("lightslategrey", 0x778899);
+        colourKeywords.put("lightsteelblue", 0xb0c4de);
+        colourKeywords.put("lightyellow", 0xffffe0);
+        colourKeywords.put("lime", 0x00ff00);
+        colourKeywords.put("limegreen", 0x32cd32);
+        colourKeywords.put("linen", 0xfaf0e6);
+        colourKeywords.put("magenta", 0xff00ff);
+        colourKeywords.put("maroon", 0x800000);
+        colourKeywords.put("mediumaquamarine", 0x66cdaa);
+        colourKeywords.put("mediumblue", 0x0000cd);
+        colourKeywords.put("mediumorchid", 0xba55d3);
+        colourKeywords.put("mediumpurple", 0x9370db);
+        colourKeywords.put("mediumseagreen", 0x3cb371);
+        colourKeywords.put("mediumslateblue", 0x7b68ee);
+        colourKeywords.put("mediumspringgreen", 0x00fa9a);
+        colourKeywords.put("mediumturquoise", 0x48d1cc);
+        colourKeywords.put("mediumvioletred", 0xc71585);
+        colourKeywords.put("midnightblue", 0x191970);
+        colourKeywords.put("mintcream", 0xf5fffa);
+        colourKeywords.put("mistyrose", 0xffe4e1);
+        colourKeywords.put("moccasin", 0xffe4b5);
+        colourKeywords.put("navajowhite", 0xffdead);
+        colourKeywords.put("navy", 0x000080);
+        colourKeywords.put("oldlace", 0xfdf5e6);
+        colourKeywords.put("olive", 0x808000);
+        colourKeywords.put("olivedrab", 0x6b8e23);
+        colourKeywords.put("orange", 0xffa500);
+        colourKeywords.put("orangered", 0xff4500);
+        colourKeywords.put("orchid", 0xda70d6);
+        colourKeywords.put("palegoldenrod", 0xeee8aa);
+        colourKeywords.put("palegreen", 0x98fb98);
+        colourKeywords.put("paleturquoise", 0xafeeee);
+        colourKeywords.put("palevioletred", 0xdb7093);
+        colourKeywords.put("papayawhip", 0xffefd5);
+        colourKeywords.put("peachpuff", 0xffdab9);
+        colourKeywords.put("peru", 0xcd853f);
+        colourKeywords.put("pink", 0xffc0cb);
+        colourKeywords.put("plum", 0xdda0dd);
+        colourKeywords.put("powderblue", 0xb0e0e6);
+        colourKeywords.put("purple", 0x800080);
+        colourKeywords.put("red", 0xff0000);
+        colourKeywords.put("rosybrown", 0xbc8f8f);
+        colourKeywords.put("royalblue", 0x4169e1);
+        colourKeywords.put("saddlebrown", 0x8b4513);
+        colourKeywords.put("salmon", 0xfa8072);
+        colourKeywords.put("sandybrown", 0xf4a460);
+        colourKeywords.put("seagreen", 0x2e8b57);
+        colourKeywords.put("seashell", 0xfff5ee);
+        colourKeywords.put("sienna", 0xa0522d);
+        colourKeywords.put("silver", 0xc0c0c0);
+        colourKeywords.put("skyblue", 0x87ceeb);
+        colourKeywords.put("slateblue", 0x6a5acd);
+        colourKeywords.put("slategray", 0x708090);
+        colourKeywords.put("slategrey", 0x708090);
+        colourKeywords.put("snow", 0xfffafa);
+        colourKeywords.put("springgreen", 0x00ff7f);
+        colourKeywords.put("steelblue", 0x4682b4);
+        colourKeywords.put("tan", 0xd2b48c);
+        colourKeywords.put("teal", 0x008080);
+        colourKeywords.put("thistle", 0xd8bfd8);
+        colourKeywords.put("tomato", 0xff6347);
+        colourKeywords.put("turquoise", 0x40e0d0);
+        colourKeywords.put("violet", 0xee82ee);
+        colourKeywords.put("wheat", 0xf5deb3);
+        colourKeywords.put("white", 0xffffff);
+        colourKeywords.put("whitesmoke", 0xf5f5f5);
+        colourKeywords.put("yellow", 0xffff00);
+        colourKeywords.put("yellowgreen", 0x9acd32);
+    }
+
     public static Integer color(String string) {
         if (NullUtil.isEmpty(string))
             return null;
+        if (colourKeywords.containsKey(string))
+            return colourKeywords.get(string);
         boolean is16 = false;
         if (string.startsWith("#")) {
             is16 = true;
@@ -302,7 +458,7 @@ public class StringUtil {
      * lhl 2018-1-9 下午3:59:39 说明：将字母转化为路径
      *
      * @param str
-     * @return ArrayList<float       [       ]>
+     * @return ArrayList<float [ ]>
      */
     private static ArrayList<float[]> getPathFloats(String str) {
         return getPathFloats(str, 1, 14);
@@ -314,7 +470,7 @@ public class StringUtil {
      * @param str
      * @param scale
      * @param gapBetweenLetter 字母之间的距离
-     * @return ArrayList<float       [       ]>
+     * @return ArrayList<float [ ]>
      */
     private static ArrayList<float[]> getPathFloats(String str, float scale,
                                                     int gapBetweenLetter) {
@@ -395,7 +551,7 @@ public class StringUtil {
      * lhl 2018-1-9 下午3:59:39 说明：将字母转化为路径
      *
      * @param str
-     * @return ArrayList<float       [       ]>
+     * @return ArrayList<float [ ]>
      */
     public static Path string2path(String str) {
         return getPath(getPathFloats(str));
@@ -407,7 +563,7 @@ public class StringUtil {
      * @param str
      * @param scale
      * @param gapBetweenLetter 字母之间的距离
-     * @return ArrayList<float       [       ]>
+     * @return ArrayList<float [ ]>
      */
     public static Path string2path(String str, float scale, int gapBetweenLetter) {
         return getPath(getPathFloats(str, scale, gapBetweenLetter));

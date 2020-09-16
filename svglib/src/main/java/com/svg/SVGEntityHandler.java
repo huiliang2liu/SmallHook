@@ -92,7 +92,6 @@ public class SVGEntityHandler extends ASVGPars.SAXParasHandler {
     }
 
 
-
     @Override
     public void startDocument() throws SAXException {
         // Set up prior to parsing a doc
@@ -188,6 +187,8 @@ public class SVGEntityHandler extends ASVGPars.SAXParasHandler {
         }
     }
 
+    private String groupFill;
+
     private void parserG(Attributes atts) {
         for (int i = 0; i < atts.getLength(); i++) {
             String key = atts.getLocalName(i);
@@ -200,6 +201,8 @@ public class SVGEntityHandler extends ASVGPars.SAXParasHandler {
                     hidden = true;
                     hiddenLevel = 1;
                 }
+            } else if (key.equals(FILL)) {
+                groupFill = value;
             }
         }
         if (hidden) {
@@ -218,9 +221,9 @@ public class SVGEntityHandler extends ASVGPars.SAXParasHandler {
             else if (key.equals(Y))
                 rect.setY(Float.valueOf(value));
             else if (key.equals(WIDTH))
-                rect.setWidth(Float.valueOf(value));
+                rect.setWidth(value);
             else if (key.equals(HEIGHT))
-                rect.setHeight(Float.valueOf(value));
+                rect.setHeight(value);
             else if (key.equals(TRANSFORM))
                 rect.setTransform(value);
             else
@@ -335,6 +338,8 @@ public class SVGEntityHandler extends ASVGPars.SAXParasHandler {
     }
 
     private void setProperty(Properties props, String key, String value) {
+        if (!StringUtil.isEmpty(groupFill))
+            props.setFill(groupFill);
         if (key.equals(STYLE))
             props.setStyles(new SVGPars.StyleSet(value));
         else if (key.equals(DISPLAY))
@@ -355,6 +360,8 @@ public class SVGEntityHandler extends ASVGPars.SAXParasHandler {
             props.setFillOpacity(value);
         else if (key.equals(STROKE_OPACITY))
             props.setStrokeOpacity(value);
+        else if (key.equals(ID))
+            props.setId(value);
     }
 
     private void parserText(Attributes atts) {
@@ -464,6 +471,7 @@ public class SVGEntityHandler extends ASVGPars.SAXParasHandler {
                     hidden = false;
                 }
             }
+            groupFill = null;
             // Clear gradient map
         } else if (localName.equals(TEXT))
             svgText = null;

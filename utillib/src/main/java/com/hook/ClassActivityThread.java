@@ -57,14 +57,18 @@ class ClassActivityThread implements Callback {
         installContentProviders = MethodManager.method(activityThreadClass, "installContentProviders", Context.class, List.class);
         h = ClassManager.forName("android.app.ActivityThread$H");
         mCallback = FieldManager.field(Handler.class, "mCallback");
-        LAUNCH_ACTIVITY = (int) FieldManager.getField(null,
-                FieldManager.field(h, "LAUNCH_ACTIVITY"));
-        CREATE_SERVICE = (int) FieldManager.getField(null,
-                FieldManager.field(h, "CREATE_SERVICE"));
-        LOW_MEMORY = (int) FieldManager.getField(null,
-                FieldManager.field(h, "LOW_MEMORY"));
-        TRIM_MEMORY = (int) FieldManager.getField(null,
-                FieldManager.field(h, "TRIM_MEMORY"));
+        try {
+            LAUNCH_ACTIVITY = (int) FieldManager.getField(null,
+                    FieldManager.field(h, "LAUNCH_ACTIVITY"));
+            CREATE_SERVICE = (int) FieldManager.getField(null,
+                    FieldManager.field(h, "CREATE_SERVICE"));
+            LOW_MEMORY = (int) FieldManager.getField(null,
+                    FieldManager.field(h, "LOW_MEMORY"));
+            TRIM_MEMORY = (int) FieldManager.getField(null,
+                    FieldManager.field(h, "TRIM_MEMORY"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         activityThread = FieldManager.getField(null, FieldManager.field(
                 activityThreadClass, "sCurrentActivityThread"));
         mH = FieldManager.getField(activityThread,

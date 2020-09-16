@@ -1,5 +1,6 @@
 package com.login.tencent;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -49,7 +50,7 @@ public class TencentManager {
         if (!mTencent.isQQInstalled(mContext)) {
             LogUtil.e(TAG, "没有安装qq应用将通过页面授权");
         }
-        addFragment(activity.getSupportFragmentManager());
+        addFragment(activity,activity.getSupportFragmentManager());
         mLogin.login(loginListener);
     }
 
@@ -61,15 +62,15 @@ public class TencentManager {
         if (!mTencent.isQQInstalled(mContext)) {
             LogUtil.e(TAG, "没有安装qq应用将通过页面授权");
         }
-        addFragment(fragment.getChildFragmentManager());
+        addFragment(fragment.getActivity(),fragment.getChildFragmentManager());
         mLogin.login(loginListener);
     }
 
-    private void addFragment(android.support.v4.app.FragmentManager manager) {
+    private void addFragment(Activity activity,android.support.v4.app.FragmentManager manager) {
         android.support.v4.app.Fragment fragment = manager.findFragmentByTag(TAG);
         boolean isNewInstance = fragment == null;
         if (isNewInstance) {
-            fragment = new TencentImpl();
+            mLogin = new TencentImpl(activity);
             android.support.v4.app.FragmentTransaction transaction = manager.beginTransaction();
             transaction.add(fragment, TAG);
             if (android.os.Build.VERSION.SDK_INT >= 24)

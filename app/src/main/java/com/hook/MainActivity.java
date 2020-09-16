@@ -36,7 +36,7 @@ public class MainActivity extends FragmentActivity {
         LogUtil.e(activityInfo.targetActivity);
 //        Toast.makeText()
         super.onCreate(savedInstanceState);
-//        setContentView(LayoutInflater.from(this).inflate(R.layout.activity_main, null));
+        setContentView(R.layout.activity_main);
         test = findViewById(R.id.test);
         result = new ActivityResult(this);
         search = findViewById(R.id.search);

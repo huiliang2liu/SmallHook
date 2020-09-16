@@ -20,6 +20,7 @@ public class ColoredProgressBar extends View {
 	private int progress = 0;
 	private final static String TAG = "ColoredProgressBar";
 	private LoadedListen loadedListen;
+	private Paint paint;
 
 	public ColoredProgressBar(Context context) {
 		super(context);
@@ -44,6 +45,9 @@ public class ColoredProgressBar extends View {
 		// TODO Auto-generated method stub
 		w = getWidth();
 		h = getHeight();
+		paint = new Paint();
+		paint.setAntiAlias(true);
+		paint.setColor(b);
 		Log.e(TAG, "init");
 	}
 
@@ -53,11 +57,8 @@ public class ColoredProgressBar extends View {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
 		synchronized (this) {
-			Paint paint = new Paint();
-			paint.setAntiAlias(true);
 			w = getWidth();
 			h = getHeight();
-			paint.setColor(b);
 			paint.setStyle(Paint.Style.FILL);
 			float a = (float) progress / 100;
 			float r = (float) h / 2;

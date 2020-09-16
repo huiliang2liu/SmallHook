@@ -27,7 +27,7 @@ public abstract class SVGD {
     private boolean whiteMode = false;
     private Integer searchColor = null;
     private Integer replaceColor = null;
-    private SVGEntity entity;
+    protected SVGEntity entity;
     private Matrix matrix;
     private float[] values;
 

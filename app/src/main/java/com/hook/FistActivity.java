@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
 import com.thread.PoolManager;
 
@@ -14,7 +15,7 @@ import com.thread.PoolManager;
  * instructions：
  * author:liuhuiliang  email:825378291@qq.com
  **/
-public class FistActivity extends Activity {
+public class FistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

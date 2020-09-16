@@ -1,5 +1,6 @@
 package com.svg;
 
+import com.util.PathUtil;
 import com.utils.LogUtil;
 
 /**
@@ -18,7 +19,16 @@ public class Properties {
     private String strokeLinejoin;
     private Float opacity;
     private Float fillOpacity;
-    private Float strokeOpacity=1.0f;
+    private Float strokeOpacity = 1.0f;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Float getStrokeOpacity() {
         return strokeOpacity;
@@ -65,7 +75,7 @@ public class Properties {
     }
 
     public void setStrokeWidth(String strokeWidth) {
-        this.strokeWidth = Float.valueOf(strokeWidth);
+        this.strokeWidth = PathUtil.string2float(strokeWidth);
     }
 
     public String getStrokeLinecap() {
@@ -92,11 +102,11 @@ public class Properties {
         this.fill = fill;
     }
 
-    public SVGPars.StyleSet  getStyles() {
+    public SVGPars.StyleSet getStyles() {
         return styles;
     }
 
-    public void setStyles(SVGPars.StyleSet  styles) {
+    public void setStyles(SVGPars.StyleSet styles) {
         this.styles = styles;
     }
 
